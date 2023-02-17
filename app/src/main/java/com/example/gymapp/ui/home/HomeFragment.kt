@@ -1,25 +1,24 @@
-package com.example.gymapp
+package com.example.gymapp.ui.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.gymapp.factory.HomeFactory
+import com.example.gymapp.R
 import com.example.gymapp.adapter.SubsAdapter
 import com.example.gymapp.database.SubscribersDatabase
 import com.example.gymapp.databinding.FragmentHomeBinding
-import com.example.gymapp.model.Subscriber
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 
 class HomeFragment : Fragment() {
 
     private lateinit var adapter : SubsAdapter
-    private lateinit var subscriber : List<Subscriber>
     private var _binding : FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
@@ -31,17 +30,19 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(layoutInflater,container,false)
         val view = binding.root
 
+
+
         val application = requireNotNull(this.activity).application
         val dao = SubscribersDatabase.getInstance(application).subscribeDao
-
-        GlobalScope.launch {
-             subscriber = dao.getAll()
-            adapter = SubsAdapter(application, subscriber)
-            binding.recyclerView.adapter = adapter
-        }
-
+        val factory = HomeFactory(dao)
+        val homeViewModel = ViewModelProvider(this,factory).get(HomeViewModel::class.java)
         binding.recyclerView.layoutManager = LinearLayoutManager(application)
-
+        homeViewModel.sublists.observe(viewLifecycleOwner , Observer {
+            it.let {
+                adapter = SubsAdapter(application,it)
+                binding.recyclerView.adapter = adapter
+            }
+        })
 
 
         binding.addFloat.setOnClickListener {

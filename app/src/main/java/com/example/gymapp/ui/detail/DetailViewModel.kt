@@ -1,4 +1,4 @@
-package com.example.gymapp
+package com.example.gymapp.ui.detail
 
 import androidx.lifecycle.ViewModel
 
