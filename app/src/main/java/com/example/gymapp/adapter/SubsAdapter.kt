@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.lifecycle.LiveData
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gymapp.R
 import com.example.gymapp.model.Subscriber
+import com.example.gymapp.ui.home.HomeFragmentDirections
 
 class SubsAdapter(private val context: Context, private val subList: List<Subscriber>) : RecyclerView.Adapter<SubsAdapter.ViewHolder>() {
 
@@ -21,9 +22,14 @@ class SubsAdapter(private val context: Context, private val subList: List<Subscr
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-       var subscriber = subList[position]
+       val subscriber = subList[position]
         holder.name.text = subscriber.name
         holder.endDate.text = subscriber.subEndDate
+
+        holder.itemView.setOnClickListener {
+            val action = HomeFragmentDirections.actionHomeFragment2ToDetailFragment(subscriber.subscriberId)
+            holder.itemView.findNavController().navigate(action)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -33,7 +39,6 @@ class SubsAdapter(private val context: Context, private val subList: List<Subscr
      class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
          val name = itemView.findViewById<TextView>(R.id.name)
          val endDate = itemView.findViewById<TextView>(R.id.endDate)
-
     }
 
 }
