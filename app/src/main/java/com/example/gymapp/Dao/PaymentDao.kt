@@ -1,5 +1,6 @@
 package com.example.gymapp.Dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.example.gymapp.model.Payment
 
@@ -19,5 +20,5 @@ interface PaymentDao {
     fun get(id : Int) : Payment
 
     @Query("SELECT * FROM payment_database")
-     fun getAll() : List<Payment>
+     fun getAll() : LiveData<List<Payment>>
 }
