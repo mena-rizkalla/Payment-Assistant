@@ -8,13 +8,10 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.gymapp.R
 import com.example.gymapp.adapter.PaymentAdapter
 import com.example.gymapp.database.PaymentsDatabase
 import com.example.gymapp.databinding.FragmentPaymentsBinding
 import com.example.gymapp.factory.PaymentFactory
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 
 class PaymentsFragment : Fragment() {
@@ -40,6 +37,7 @@ class PaymentsFragment : Fragment() {
             it.let {
                 val paymentsAdapter = PaymentAdapter(application,it)
                 binding.paymentRecyclerView.adapter = paymentsAdapter
+                paymentsAdapter.notifyDataSetChanged()
             }
         })
 

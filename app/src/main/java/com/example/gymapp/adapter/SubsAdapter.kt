@@ -25,6 +25,7 @@ class SubsAdapter(private val context: Context, private val subList: List<Subscr
        val subscriber = subList[position]
         holder.name.text = subscriber.name
         holder.endDate.text = subscriber.subEndDate
+        holder.date.text = subscriber.subDate
 
         holder.itemView.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragment2ToDetailFragment(subscriber.subscriberId)
@@ -39,6 +40,7 @@ class SubsAdapter(private val context: Context, private val subList: List<Subscr
      class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
          val name = itemView.findViewById<TextView>(R.id.name)
          val endDate = itemView.findViewById<TextView>(R.id.endDate)
+         val date = itemView.findViewById<TextView>(R.id.date)
     }
 
 }

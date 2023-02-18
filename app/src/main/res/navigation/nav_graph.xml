@@ -28,5 +28,8 @@
             android:name="subId"
             app:argType="integer"
             android:defaultValue="-1" />
+        <action
+            android:id="@+id/action_detailFragment_to_homeFragment2"
+            app:popUpTo="@id/homeFragment2" />
     </fragment>
 </navigation>

@@ -31,11 +31,12 @@ class HomeFragment : Fragment() {
         val view = binding.root
 
 
-
         val application = requireNotNull(this.activity).application
         val dao = SubscribersDatabase.getInstance(application).subscribeDao
         val factory = HomeFactory(dao)
+
         val homeViewModel = ViewModelProvider(this,factory).get(HomeViewModel::class.java)
+
         binding.recyclerView.layoutManager = LinearLayoutManager(application)
         homeViewModel.sublists.observe(viewLifecycleOwner , Observer {
             it.let {
@@ -44,13 +45,11 @@ class HomeFragment : Fragment() {
             }
         })
 
-
         binding.addFloat.setOnClickListener {
 
             this.findNavController().navigate(R.id.action_homeFragment2_to_detailFragment)
 
         }
-
 
         return view
     }

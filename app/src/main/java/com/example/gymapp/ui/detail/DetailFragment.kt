@@ -5,26 +5,27 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import com.example.gymapp.R
 import com.example.gymapp.database.PaymentsDatabase
 import com.example.gymapp.database.SubscribersDatabase
 import com.example.gymapp.databinding.FragmentDetailBinding
+import com.example.gymapp.factory.DetailFactory
 import com.example.gymapp.model.Payment
-
 import com.example.gymapp.model.Subscriber
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 
 class DetailFragment : Fragment() {
     private var _binding : FragmentDetailBinding? = null
     private lateinit var subscriber : Subscriber
-    private lateinit var payment : Payment
     private val binding get() = _binding!!
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+        savedInstanceState: Bundle?): View {
         _binding = FragmentDetailBinding.inflate(layoutInflater,container,false)
         val view = binding.root
 
@@ -34,19 +35,25 @@ class DetailFragment : Fragment() {
         val subDao = SubscribersDatabase.getInstance(application).subscribeDao
         val paymentDao = PaymentsDatabase.getInstance(application).paymentDao
 
-         var edit = false
+        val detailFactory = DetailFactory(subDao,paymentDao,subId)
+        val detailViewModel = ViewModelProvider(this,detailFactory)[DetailViewModel::class.java]
+
 
         if (subId != -1){
-            edit = true
-            GlobalScope.launch {
-                subscriber = subDao.get(subId)
-                payment = paymentDao.get(subId)
+            binding.insertSub.text = "Update"
+            detailViewModel._edit.value = true
 
+            detailViewModel.subscriber.observe(viewLifecycleOwner , Observer {
+                subscriber = it
                 binding.subName.setText(subscriber.name)
                 binding.subDate.setText(subscriber.subDate)
                 binding.subEndDate.setText(subscriber.subEndDate)
                 binding.subPrice.setText(subscriber.subPrice)
-            }
+            })
+
+            detailViewModel.payment.observe(viewLifecycleOwner , Observer {
+
+            })
         }
 
         binding.insertSub.setOnClickListener {
@@ -56,27 +63,9 @@ class DetailFragment : Fragment() {
             val subscriptionEndDate = binding.subEndDate.text.toString()
             val price = binding.subPrice.text.toString()
 
+            detailViewModel.update(subName,subscriptionDate,subscriptionEndDate,price)
 
-            GlobalScope.launch {
-                if (!edit){
-                    subscriber = Subscriber(name = subName, subDate = subscriptionDate, subEndDate = subscriptionEndDate, subPrice = price)
-                    payment = Payment( name = subName , subDate = subscriptionDate , subPrice = price)
-                    subDao.insert(subscriber)
-                    paymentDao.insert(payment)
-                }else{
-                    subscriber.name = subName
-                    subscriber.subDate = subscriptionDate
-                    subscriber.subEndDate = subscriptionEndDate
-                    subscriber.subPrice = price
-
-                    payment.name = subName
-                    payment.subDate = subscriptionDate
-                    payment.subPrice = price
-
-                    subDao.update(subscriber)
-                    paymentDao.update(payment)
-                }
-            }
+            view.findNavController().navigate(R.id.action_detailFragment_to_homeFragment2)
         }
 
         return view
