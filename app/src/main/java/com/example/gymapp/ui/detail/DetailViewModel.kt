@@ -55,4 +55,14 @@ class DetailViewModel(private var subDao : SubscribeDao, private var payDao : Pa
         }
     }
 
+    fun delete(){
+        viewModelScope.launch {
+            subDao.delete(subscriber.value!!)
+        }
+
+        viewModelScope.launch {
+            payDao.delete(payment.value!!)
+        }
+    }
+
 }

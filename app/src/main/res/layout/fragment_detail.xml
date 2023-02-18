@@ -101,4 +101,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/subPrice" />
 
+    <Button
+        android:id="@+id/deletebutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="92dp"
+        android:text="Delete"
+        app:backgroundTint="#F44336"
+        app:layout_constraintStart_toEndOf="@+id/insertSub"
+        app:layout_constraintTop_toBottomOf="@+id/subPrice"
+        tools:visibility="invisible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

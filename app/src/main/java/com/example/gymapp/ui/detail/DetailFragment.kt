@@ -1,5 +1,7 @@
 package com.example.gymapp.ui.detail
 
+import android.app.AlertDialog
+import android.opengl.Visibility
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,6 +22,7 @@ import com.example.gymapp.model.Subscriber
 class DetailFragment : Fragment() {
     private var _binding : FragmentDetailBinding? = null
     private lateinit var subscriber : Subscriber
+    private lateinit var payment: Payment
     private val binding get() = _binding!!
 
 
@@ -38,8 +41,10 @@ class DetailFragment : Fragment() {
         val detailFactory = DetailFactory(subDao,paymentDao,subId)
         val detailViewModel = ViewModelProvider(this,detailFactory)[DetailViewModel::class.java]
 
+        binding.deletebutton.visibility = View.GONE
 
         if (subId != -1){
+            binding.deletebutton.visibility = View.VISIBLE
             binding.insertSub.text = "Update"
             detailViewModel._edit.value = true
 
@@ -52,7 +57,7 @@ class DetailFragment : Fragment() {
             })
 
             detailViewModel.payment.observe(viewLifecycleOwner , Observer {
-
+                payment = it
             })
         }
 
@@ -65,6 +70,14 @@ class DetailFragment : Fragment() {
 
             detailViewModel.update(subName,subscriptionDate,subscriptionEndDate,price)
 
+            view.findNavController().navigate(R.id.action_detailFragment_to_homeFragment2)
+        }
+
+        binding.deletebutton.setOnClickListener {
+
+
+
+            detailViewModel.delete()
             view.findNavController().navigate(R.id.action_detailFragment_to_homeFragment2)
         }
 
