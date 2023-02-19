@@ -1,5 +1,9 @@
 package com.example.gymapp.ui.detail
 
+import android.app.Activity
+import android.app.Application
+import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,6 +12,8 @@ import com.example.gymapp.Dao.PaymentDao
 import com.example.gymapp.Dao.SubscribeDao
 import com.example.gymapp.model.Payment
 import com.example.gymapp.model.Subscriber
+import com.example.gymapp.model.SubscriberWithPayments
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class DetailViewModel(private var subDao : SubscribeDao, private var payDao : PaymentDao, val id : Int) : ViewModel() {
@@ -15,8 +21,12 @@ class DetailViewModel(private var subDao : SubscribeDao, private var payDao : Pa
     val _edit = MutableLiveData<Boolean>(false)
     private val edit : LiveData<Boolean> get() = _edit
 
+    // var history : MutableLiveData<SubscriberWithPayments>? = null
+    private var _history = MutableLiveData<SubscriberWithPayments?>()
+    val history: LiveData<SubscriberWithPayments?> get() =_history
+
+
     var subscriber = subDao.get(id)
-    var payment = payDao.get(id)
 
 
     fun update(name : String , startDate : String ,endDate : String , price : String){
@@ -29,28 +39,12 @@ class DetailViewModel(private var subDao : SubscribeDao, private var payDao : Pa
                 subDao.update(subscriber.value!!)
 
             }
-            viewModelScope.launch {
-                payment.value?.name = name
-                payment.value?.subDate = startDate
-                payment.value?.subPrice = price
 
-                payDao.update(payment.value!!)
-            }
         }else{
-            val newSubscriber = Subscriber(
-                name = name,
-                subDate = startDate,
-                subEndDate = endDate,
-                subPrice = price
-            )
-            val newPayment = Payment(name = name, subDate = startDate, subPrice = price)
+            val newSubscriber : Subscriber = Subscriber(name = name, subDate = startDate, subEndDate = endDate, subPrice = price);
+
             viewModelScope.launch {
                 subDao.insert(newSubscriber)
-            }
-
-            viewModelScope.launch {
-
-                payDao.insert(newPayment)
             }
         }
     }
@@ -60,9 +54,21 @@ class DetailViewModel(private var subDao : SubscribeDao, private var payDao : Pa
             subDao.delete(subscriber.value!!)
         }
 
+    }
+
+    fun pay(){
+        val Payment = Payment(subscriberId = subscriber.value!!.subscriberId,
+            name = subscriber.value!!.name, subDate = subscriber.value!!.subDate, subPrice = subscriber.value!!.subPrice)
         viewModelScope.launch {
-            payDao.delete(payment.value!!)
+            payDao.insert(Payment)
         }
+    }
+
+    fun history()  {
+        viewModelScope.launch(Dispatchers.IO) {
+            _history.postValue(subDao.getSubscriberWithPaymentsById(subscriber.value?.subscriberId!!))
+        }
+
     }
 
 }

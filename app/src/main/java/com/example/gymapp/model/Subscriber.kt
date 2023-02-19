@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "gym_table")
 data class Subscriber(
-
     @PrimaryKey(autoGenerate = true) var subscriberId : Int = 0,
     @ColumnInfo(name = "name") var name : String = "",
     @ColumnInfo(name = "subscription_date") var subDate : String = "",

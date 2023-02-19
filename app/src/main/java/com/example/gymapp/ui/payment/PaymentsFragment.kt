@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gymapp.adapter.PaymentAdapter
-import com.example.gymapp.database.PaymentsDatabase
+import com.example.gymapp.database.SubscribersDatabase
 import com.example.gymapp.databinding.FragmentPaymentsBinding
 import com.example.gymapp.factory.PaymentFactory
 
@@ -26,7 +26,7 @@ class PaymentsFragment : Fragment() {
         val view = binding.root
 
         val application = requireNotNull(this.activity).application
-        val paymentDao = PaymentsDatabase.getInstance(application).paymentDao
+        val paymentDao = SubscribersDatabase.getInstance(application).paymentDao
 
         binding.paymentRecyclerView.layoutManager = LinearLayoutManager(application)
 

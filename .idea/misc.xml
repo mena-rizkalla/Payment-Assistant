@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudioProjects/GymApp/app/src/main/res/drawable/dialog_bg.xml" value="0.1195" />
         <entry key="..\:/AndroidStudioProjects/GymApp/app/src/main/res/layout/activity_main.xml" value="0.176" />
         <entry key="..\:/AndroidStudioProjects/GymApp/app/src/main/res/layout/fragment_detail.xml" value="0.4" />
         <entry key="..\:/AndroidStudioProjects/GymApp/app/src/main/res/layout/fragment_home.xml" value="0.20606884057971014" />
@@ -10,6 +11,7 @@
         <entry key="..\:/AndroidStudioProjects/GymApp/app/src/main/res/layout/payment_item.xml" value="0.2427536231884058" />
         <entry key="..\:/AndroidStudioProjects/GymApp/app/src/main/res/layout/sub_item.xml" value="0.4" />
         <entry key="..\:/AndroidStudioProjects/GymApp/app/src/main/res/layout/subitem.xml" value="0.2427536231884058" />
+        <entry key="..\:/AndroidStudioProjects/GymApp/app/src/main/res/layout/user_payment_dialog.xml" value="0.2427536231884058" />
         <entry key="..\:/AndroidStudioProjects/GymApp/app/src/main/res/menu/main_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/AndroidStudioProjects/GymApp/app/src/main/res/menu/menu.xml" value="0.25416666666666665" />
       </map>

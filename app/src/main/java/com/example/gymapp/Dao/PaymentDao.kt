@@ -10,7 +10,7 @@ interface PaymentDao {
     @Insert
     suspend fun insert(payment: Payment)
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun update(payment: Payment)
 
     @Delete
