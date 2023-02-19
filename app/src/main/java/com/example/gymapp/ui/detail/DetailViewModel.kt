@@ -31,7 +31,6 @@ class DetailViewModel(private var subDao : SubscribeDao, private var payDao : Pa
 
     var subscriber = subDao.get(id)
 
-
     fun update(name : String , startDate : String ,endDate : String , price : String){
         if (edit.value == true){
             viewModelScope.launch {

@@ -22,6 +22,7 @@ class SubsAdapter(private val context: Context, private val subList: List<Subscr
         holder.name.text = subscriber.name
         holder.endDate.text = subscriber.subEndDate
         holder.date.text = subscriber.subDate
+        holder.price.text = subscriber.subPrice
 
         holder.itemView.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragment2ToDetailFragment(subscriber.subscriberId)
@@ -37,6 +38,7 @@ class SubsAdapter(private val context: Context, private val subList: List<Subscr
          val name = binding.name
          val endDate = binding.endDate
          val date = binding.date
+         val price = binding.price
     }
 
 }

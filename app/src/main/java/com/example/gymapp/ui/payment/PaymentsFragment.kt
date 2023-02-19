@@ -31,13 +31,12 @@ class PaymentsFragment : Fragment() {
         binding.paymentRecyclerView.layoutManager = LinearLayoutManager(application)
 
         val paymentFactory = PaymentFactory(paymentDao)
-        val paymentViewModel = ViewModelProvider(this,paymentFactory).get(PaymentViewModel::class.java)
+        val paymentViewModel = ViewModelProvider(this,paymentFactory)[PaymentViewModel::class.java]
 
         paymentViewModel.payments.observe(viewLifecycleOwner , Observer {
             it.let {
                 val paymentsAdapter = PaymentAdapter(application,it)
                 binding.paymentRecyclerView.adapter = paymentsAdapter
-                paymentsAdapter.notifyDataSetChanged()
             }
         })
 

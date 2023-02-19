@@ -19,8 +19,8 @@ class PaymentAdapter(private val context: Context , private val payments : List<
         val payment = payments[position]
 
         holder.name.text = payment.name
-        holder.date.text = payment.subDate
-        holder.price.text = payment.subPrice
+        holder.date.text = "PAYED IN: "+payment.subDate
+        holder.price.text = "PAYED: "+ payment.subPrice+" $"
     }
 
     override fun getItemCount(): Int {
