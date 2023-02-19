@@ -21,9 +21,12 @@ class DetailViewModel(private var subDao : SubscribeDao, private var payDao : Pa
     val _edit = MutableLiveData<Boolean>(false)
     private val edit : LiveData<Boolean> get() = _edit
 
-    // var history : MutableLiveData<SubscriberWithPayments>? = null
+
     private var _history = MutableLiveData<SubscriberWithPayments?>()
     val history: LiveData<SubscriberWithPayments?> get() =_history
+
+    private val _navigateToHome = MutableLiveData<Boolean>()
+    val navigateToHome : LiveData<Boolean>  get() = _navigateToHome
 
 
     var subscriber = subDao.get(id)
@@ -47,13 +50,14 @@ class DetailViewModel(private var subDao : SubscribeDao, private var payDao : Pa
                 subDao.insert(newSubscriber)
             }
         }
+        _navigateToHome.value = true
     }
 
     fun delete(){
         viewModelScope.launch {
             subDao.delete(subscriber.value!!)
         }
-
+        _navigateToHome.value = true
     }
 
     fun pay(){
@@ -62,13 +66,17 @@ class DetailViewModel(private var subDao : SubscribeDao, private var payDao : Pa
         viewModelScope.launch {
             payDao.insert(Payment)
         }
+        _navigateToHome.value = true
     }
 
     fun history()  {
         viewModelScope.launch(Dispatchers.IO) {
             _history.postValue(subDao.getSubscriberWithPaymentsById(subscriber.value?.subscriberId!!))
         }
+    }
 
+    fun onNavigateToHome(){
+        _navigateToHome.value = false
     }
 
 }

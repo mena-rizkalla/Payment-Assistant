@@ -25,9 +25,7 @@ import com.example.gymapp.model.Subscriber
 class DetailFragment : Fragment() {
     private var _binding : FragmentDetailBinding? = null
     private lateinit var subscriber : Subscriber
-    private lateinit var payment: Payment
     private val binding get() = _binding!!
-
     private lateinit var dialog: AlertDialog
 
 
@@ -45,6 +43,8 @@ class DetailFragment : Fragment() {
 
         val detailFactory = DetailFactory(subDao,paymentDao,subId)
         val detailViewModel = ViewModelProvider(this,detailFactory)[DetailViewModel::class.java]
+        binding.detailViewModel = detailViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         binding.deletebutton.visibility = View.GONE
         binding.paybtn.visibility = View.GONE
@@ -64,10 +64,6 @@ class DetailFragment : Fragment() {
                 binding.subEndDate.setText(subscriber.subEndDate)
                 binding.subPrice.setText(subscriber.subPrice)
             })
-
-           /** detailViewModel.payment.observe(viewLifecycleOwner , Observer {
-               // payment = it
-            })**/
         }
 
         binding.insertSub.setOnClickListener {
@@ -79,18 +75,14 @@ class DetailFragment : Fragment() {
 
             detailViewModel.update(subName,subscriptionDate,subscriptionEndDate,price)
 
-            view.findNavController().navigate(R.id.action_detailFragment_to_homeFragment2)
         }
 
-        binding.deletebutton.setOnClickListener {
-            detailViewModel.delete()
-            view.findNavController().navigate(R.id.action_detailFragment_to_homeFragment2)
-        }
-
-        binding.paybtn.setOnClickListener {
-            detailViewModel.pay()
-            view.findNavController().navigate(R.id.action_detailFragment_to_homeFragment2)
-        }
+        detailViewModel.navigateToHome.observe(viewLifecycleOwner , Observer {
+            if (it) {
+                view.findNavController().navigate(R.id.action_detailFragment_to_homeFragment2)
+                detailViewModel.onNavigateToHome()
+            }
+        })
 
         binding.historybtn.setOnClickListener {
 
@@ -116,8 +108,6 @@ class DetailFragment : Fragment() {
 
         return view
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()

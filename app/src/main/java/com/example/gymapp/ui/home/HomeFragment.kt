@@ -46,9 +46,7 @@ class HomeFragment : Fragment() {
         })
 
         binding.addFloat.setOnClickListener {
-
             this.findNavController().navigate(R.id.action_homeFragment2_to_detailFragment)
-
         }
 
         return view
