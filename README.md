@@ -12,7 +12,7 @@ Easy user interface
 - You can select a particular user and see all his payment history.
 - You can delete any user.
 
-
+# Screen Shots :
 
 <table align="center">
   <tr>
@@ -28,5 +28,10 @@ Easy user interface
     <td>
       <img src ="https://user-images.githubusercontent.com/52071472/219983228-94764bfa-2ad2-4efe-a67d-6883ced2de6f.jpg"/>
     </td>
+    <td>
+      <img src ="https://user-images.githubusercontent.com/52071472/220186112-56259dec-437d-48c4-96cb-5aafd4419b89.jpg"/>
+    </td>
   </tr>
 </table>
+
+Feel free to contribute/make any suggestion for this project :)
