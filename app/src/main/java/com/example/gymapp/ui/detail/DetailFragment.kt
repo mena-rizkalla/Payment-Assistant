@@ -18,13 +18,10 @@ import com.example.gymapp.adapter.PaymentAdapter
 import com.example.gymapp.database.SubscribersDatabase
 import com.example.gymapp.databinding.FragmentDetailBinding
 import com.example.gymapp.factory.DetailFactory
-import com.example.gymapp.model.Payment
-import com.example.gymapp.model.Subscriber
 
 
 class DetailFragment : Fragment() {
     private var _binding : FragmentDetailBinding? = null
-    private lateinit var subscriber : Subscriber
     private val binding get() = _binding!!
     private lateinit var dialog: AlertDialog
 
@@ -58,11 +55,10 @@ class DetailFragment : Fragment() {
             detailViewModel._edit.value = true
 
             detailViewModel.subscriber.observe(viewLifecycleOwner , Observer {
-                subscriber = it
-                binding.subName.setText(subscriber.name)
-                binding.subDate.setText(subscriber.subDate)
-                binding.subEndDate.setText(subscriber.subEndDate)
-                binding.subPrice.setText(subscriber.subPrice)
+                binding.subName.setText(it.name)
+                binding.subDate.setText(it.subDate)
+                binding.subEndDate.setText(it.subEndDate)
+                binding.subPrice.setText(it.subPrice)
             })
         }
 

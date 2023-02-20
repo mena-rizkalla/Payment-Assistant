@@ -1,7 +1,6 @@
 package com.example.gymapp.Dao
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 import com.example.gymapp.model.Subscriber
 import com.example.gymapp.model.SubscriberWithPayments

@@ -1,9 +1,5 @@
 package com.example.gymapp.ui.detail
 
-import android.app.Activity
-import android.app.Application
-import android.content.Context
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
