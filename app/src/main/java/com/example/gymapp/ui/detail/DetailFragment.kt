@@ -13,16 +13,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gymapp.NotificationService
 import com.example.gymapp.R
 import com.example.gymapp.adapter.PaymentAdapter
 import com.example.gymapp.database.SubscribersDatabase
 import com.example.gymapp.databinding.FragmentDetailBinding
 import com.example.gymapp.factory.DetailFactory
+import com.example.gymapp.model.Subscriber
 
 
 class DetailFragment : Fragment() {
     private var _binding : FragmentDetailBinding? = null
     private val binding get() = _binding!!
+    private lateinit var subscriber: Subscriber
     private lateinit var dialog: AlertDialog
 
 
@@ -55,6 +58,7 @@ class DetailFragment : Fragment() {
             detailViewModel._edit.value = true
 
             detailViewModel.subscriber.observe(viewLifecycleOwner , Observer {
+                subscriber = it
                 binding.subName.setText(it.name)
                 binding.subDate.setText(it.subDate)
                 binding.subEndDate.setText(it.subEndDate)
@@ -100,6 +104,13 @@ class DetailFragment : Fragment() {
             dialog = builder.create()
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog.show()
+        }
+
+        binding.paybtn.setOnClickListener {
+            val service = NotificationService(application)
+            detailViewModel.pay()
+            service.showNotification(subscriber.name)
+
         }
 
         return view

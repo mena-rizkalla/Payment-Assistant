@@ -40,7 +40,6 @@ class DetailViewModel(private var subDao : SubscribeDao, private var payDao : Pa
 
         }else{
             val newSubscriber : Subscriber = Subscriber(name = name, subDate = startDate, subEndDate = endDate, subPrice = price);
-
             viewModelScope.launch {
                 subDao.insert(newSubscriber)
             }
