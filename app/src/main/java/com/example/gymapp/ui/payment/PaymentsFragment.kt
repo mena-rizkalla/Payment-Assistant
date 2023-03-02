@@ -35,7 +35,7 @@ class PaymentsFragment : Fragment() {
 
         paymentViewModel.payments.observe(viewLifecycleOwner , Observer {
             it.let {
-                val paymentsAdapter = PaymentAdapter(application,it)
+                val paymentsAdapter = PaymentAdapter(application,it as ArrayList)
                 binding.paymentRecyclerView.adapter = paymentsAdapter
             }
         })

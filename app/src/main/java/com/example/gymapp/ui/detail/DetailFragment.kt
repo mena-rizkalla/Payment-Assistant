@@ -96,7 +96,8 @@ class DetailFragment : Fragment() {
             detailViewModel.history()
 
             detailViewModel.history.observe(viewLifecycleOwner , Observer {
-                val adapter = it?.let { it1 -> PaymentAdapter(application, it1.payments) }
+                val adapter = it?.let { it1 -> PaymentAdapter(application,
+                    it1.payments as ArrayList) }
                 recycler.adapter = adapter
             })
 
