@@ -1,4 +1,4 @@
-# # Gym Assistant App Overview
+# # Payment Assistant App Overview
 
 This app is designed to help gym assistants keep track of user subscriptions and other information. The app is build with Room (one-to-many relationship),Kotlin Coroutines, Navigation View, View Binding and Data Binding to provide a secure and efficient method for handling memberships including start dates, end dates and pricing.It also provides users with a smooth user experience. 
 
